@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>曹雪松de博客|CoderBoy&#39;s Blog</title>
+  
+  <subtitle>技术宅 iOS开发 美剧控</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://sevencho.github.io/"/>
+  <updated>2019-04-08T04:15:36.891Z</updated>
+  <id>https://sevencho.github.io/</id>
+  
+  <author>
+    <name>曹雪松</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mac 安装Android Studio 及环境变量配置</title>
+    <link href="https://sevencho.github.io/archives/67c8fe48.html"/>
+    <id>https://sevencho.github.io/archives/67c8fe48.html</id>
+    <published>2019-03-27T07:20:52.000Z</published>
+    <updated>2019-04-08T04:15:36.891Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我翻开历史一查，这历史没有年代。歪歪斜斜的每页上都写着“仁义道德”几个字，我横竖睡不着，仔细看了半夜，才从字缝里看出来，满本上都写着两个字“吃人”！&lt;/p&gt;
+&lt;p&gt;–鲁迅《狂人日记》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Android" scheme="https://sevencho.github.io/categories/Android/"/>
+    
+    
+      <category term="Android Studio" scheme="https://sevencho.github.io/tags/Android-Studio/"/>
+    
+      <category term="Android" scheme="https://sevencho.github.io/tags/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>微信小程序入坑</title>
+    <link href="https://sevencho.github.io/archives/c6d2cc27.html"/>
+    <id>https://sevencho.github.io/archives/c6d2cc27.html</id>
+    <published>2019-03-21T09:58:52.000Z</published>
+    <updated>2019-04-08T04:13:47.112Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;中国人的性情是总喜欢调和折中的，譬如你说，这屋子太暗，须在这里开一个窗，大家一定不允许的。但如果你主张拆掉屋顶他们就来调和，愿意开窗了。&lt;/p&gt;
+&lt;p&gt;–鲁迅《无声的中国》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="weapp" scheme="https://sevencho.github.io/categories/weapp/"/>
+    
+    
+      <category term="微信小程序" scheme="https://sevencho.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发之新一代iPhone三剑客适配指北</title>
+    <link href="https://sevencho.github.io/archives/3a74c3e3.html"/>
+    <id>https://sevencho.github.io/archives/3a74c3e3.html</id>
+    <published>2018-09-28T11:58:45.000Z</published>
+    <updated>2018-10-09T08:43:16.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/uploads/assets/compatibility_profile.png&quot; alt=&quot;compatibility_profile&quot;&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="iPhone X" scheme="https://sevencho.github.io/tags/iPhone-X/"/>
+    
+      <category term="iPhone XS" scheme="https://sevencho.github.io/tags/iPhone-XS/"/>
+    
+      <category term="iPhone XR" scheme="https://sevencho.github.io/tags/iPhone-XR/"/>
+    
+      <category term="iPhone XS Max" scheme="https://sevencho.github.io/tags/iPhone-XS-Max/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发之关于静态库制作及注意点</title>
+    <link href="https://sevencho.github.io/archives/a9b5807a.html"/>
+    <id>https://sevencho.github.io/archives/a9b5807a.html</id>
+    <published>2018-09-21T11:58:45.000Z</published>
+    <updated>2018-11-21T08:35:28.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在那时候，那些东西不转身就正面背面都领受到了月光，我不回头就看见了过往。&lt;/p&gt;
+&lt;p&gt;–刘亮程《今生今世的证据》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="静态库" scheme="https://sevencho.github.io/tags/%E9%9D%99%E6%80%81%E5%BA%93/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swift项目版本4.0迁移4.2记录</title>
+    <link href="https://sevencho.github.io/archives/dd5e907.html"/>
+    <id>https://sevencho.github.io/archives/dd5e907.html</id>
+    <published>2018-09-21T11:58:45.000Z</published>
+    <updated>2018-10-09T08:39:22.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;阳光倾泻而下，他的身影穿过院子，提利昂·兰尼斯特昂首挺立，仿佛是一位国王。&lt;/p&gt;
+&lt;p&gt;–《 冰与火之歌》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Swift" scheme="https://sevencho.github.io/categories/Swift/"/>
+    
+    
+      <category term="Swift" scheme="https://sevencho.github.io/tags/Swift/"/>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发之使用JenKins &amp; fastlane 实现自动打包及持续集成</title>
+    <link href="https://sevencho.github.io/archives/56d26041.html"/>
+    <id>https://sevencho.github.io/archives/56d26041.html</id>
+    <published>2018-09-18T11:58:45.000Z</published>
+    <updated>2019-03-28T09:10:58.048Z</updated>
+    
+    <summary type="html">
+    
+      &lt;center&gt;&lt;img src=&quot;/uploads/assets/Continuous-integration-with-docker.png&quot; alt=&quot;integration-with-docker&quot;&gt;&lt;/center&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="JenKins" scheme="https://sevencho.github.io/tags/JenKins/"/>
+    
+      <category term="fastlane" scheme="https://sevencho.github.io/tags/fastlane/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo博客NexT主题从v5.x.x更新到v6.x.x的记录及总结</title>
+    <link href="https://sevencho.github.io/archives/14534beb.html"/>
+    <id>https://sevencho.github.io/archives/14534beb.html</id>
+    <published>2018-09-03T11:58:45.000Z</published>
+    <updated>2018-09-06T07:10:16.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;当这个村庄局限我的一生时，小小的地球正在局限着整个人类。 &lt;/p&gt;
+&lt;p&gt;——刘亮程《一个人的村庄》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Blog" scheme="https://sevencho.github.io/categories/Blog/"/>
+    
+    
+      <category term="Blog" scheme="https://sevencho.github.io/tags/Blog/"/>
+    
+      <category term="Hexo" scheme="https://sevencho.github.io/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次iOS使用XTEA微型加密算法</title>
+    <link href="https://sevencho.github.io/archives/d3400f8e.html"/>
+    <id>https://sevencho.github.io/archives/d3400f8e.html</id>
+    <published>2018-08-31T01:25:25.000Z</published>
+    <updated>2018-09-04T09:02:30.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;许多年后有一股寒风，从我自以为火热温暖的从未被寒冷侵入的内心深处阵阵袭来时，我才发现穿再厚的棉衣也没用了。生命本身有一个冬天，它已经来临。&lt;/p&gt;
+&lt;p&gt;——刘亮程《寒风吹彻》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="XTEA" scheme="https://sevencho.github.io/tags/XTEA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次Hexo博客部署缓慢的解决办法</title>
+    <link href="https://sevencho.github.io/archives/8e3becb8.html"/>
+    <id>https://sevencho.github.io/archives/8e3becb8.html</id>
+    <published>2018-08-30T01:25:25.000Z</published>
+    <updated>2018-09-04T03:07:49.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;况且，一个人要活的真实就难免不把别人的一生当一场戏。看不见的岁月是可怕的。&lt;/p&gt;
+&lt;p&gt;——刘亮程《一个人的村庄》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Blog" scheme="https://sevencho.github.io/categories/Blog/"/>
+    
+    
+      <category term="Blog" scheme="https://sevencho.github.io/tags/Blog/"/>
+    
+      <category term="Hexo" scheme="https://sevencho.github.io/tags/Hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS攻防（六）：使用Cycript一窥运行程序的神秘面纱(入门篇)</title>
+    <link href="https://sevencho.github.io/archives/c12f47b1.html"/>
+    <id>https://sevencho.github.io/archives/c12f47b1.html</id>
+    <published>2018-08-29T09:25:45.000Z</published>
+    <updated>2018-09-03T03:35:52.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;从那个夜晚我懂得了隐藏温暖——在凛冽的寒风中，身体中那点温暖节俭地用于此后多年的爱情和生活。我的亲人说我是个很冷的人，不是的，我把仅有的温暖全给了你们。&lt;/p&gt;
+&lt;p&gt;——刘亮程《寒风吹彻》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/categories/iOS/%E6%94%BB%E9%98%B2/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/tags/%E6%94%BB%E9%98%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swift开发服务端（三）：Perfect再次初体验</title>
+    <link href="https://sevencho.github.io/archives/f7d447dc.html"/>
+    <id>https://sevencho.github.io/archives/f7d447dc.html</id>
+    <published>2018-08-24T07:25:25.000Z</published>
+    <updated>2018-09-03T03:35:54.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;多少年后当眼前的一切成为结局，时间改变了我，改变了村里的一切。整个老掉的一代人，坐在黄昏里感叹岁月流逝、沧桑巨变。没人知道有些东西是被我改变的。在时间经过这个小村庄的时候，我帮了时间的忙，让该变的一切都有了变迁。我老的时候，我会说：我是在时光中老的。&lt;/p&gt;
+&lt;p&gt;——刘亮程《一个人的村庄》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://sevencho.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+      <category term="服务器" scheme="https://sevencho.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="Swift" scheme="https://sevencho.github.io/tags/Swift/"/>
+    
+      <category term="Perfect" scheme="https://sevencho.github.io/tags/Perfect/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swift开发服务端（二）：使用Parallels Desktop虚拟机安装Ubuntu系统及相关配置</title>
+    <link href="https://sevencho.github.io/archives/64bb63f1.html"/>
+    <id>https://sevencho.github.io/archives/64bb63f1.html</id>
+    <published>2018-08-24T01:56:25.000Z</published>
+    <updated>2018-09-03T03:35:54.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;故乡是一个人的羞涩处，也是一个人最大的隐秘。我把故乡隐藏在身后，单枪匹马去闯荡生活。我在世界的任何一个地方走动，居住和生活，那不是我的，我不会留下脚印。&lt;/p&gt;
+&lt;p&gt;——刘亮程《一个人的村庄》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://sevencho.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+      <category term="服务器" scheme="https://sevencho.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="Swift" scheme="https://sevencho.github.io/tags/Swift/"/>
+    
+      <category term="Linux" scheme="https://sevencho.github.io/tags/Linux/"/>
+    
+      <category term="Parallels Desktop" scheme="https://sevencho.github.io/tags/Parallels-Desktop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Swift开发服务端（一）：MySQL安装及配置</title>
+    <link href="https://sevencho.github.io/archives/6efe8aae.html"/>
+    <id>https://sevencho.github.io/archives/6efe8aae.html</id>
+    <published>2018-08-22T06:32:25.000Z</published>
+    <updated>2018-09-03T03:35:54.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;经过许多个冬天之后，我才渐渐明白自己再躲不过雪，无论我蜷缩在屋子里，还是远在冬天的另一个地方，纷纷扬扬的雪，都会落在我正经历的一段岁月里。当一个人的岁月像荒野一样敞开时，他便无法照管好自己，落在一个人一生中的雪，我们不能全部看见，每个人都在自己的生命中，孤独地过冬。&lt;/p&gt;
+&lt;p&gt;——刘亮程《寒风吹彻》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="服务器" scheme="https://sevencho.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+    
+      <category term="服务器" scheme="https://sevencho.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
+    
+      <category term="Swift" scheme="https://sevencho.github.io/tags/Swift/"/>
+    
+      <category term="MySQL" scheme="https://sevencho.github.io/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Hexo博客加载Live2D动画模型挂件</title>
+    <link href="https://sevencho.github.io/archives/cb206c67.html"/>
+    <id>https://sevencho.github.io/archives/cb206c67.html</id>
+    <published>2018-08-22T03:20:25.000Z</published>
+    <updated>2018-09-04T03:07:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;许多年之后你再看，骑快马飞奔的人和坐在牛背上慢悠悠赶路的人，一样老态龙钟回到村庄里，他们衰老的速度是一样的。时间才不管谁跑得多快多慢呢。&lt;/p&gt;
+&lt;p&gt;——刘亮程《一个人的村庄》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="Blog" scheme="https://sevencho.github.io/categories/Blog/"/>
+    
+    
+      <category term="Blog" scheme="https://sevencho.github.io/tags/Blog/"/>
+    
+      <category term="Hexo" scheme="https://sevencho.github.io/tags/Hexo/"/>
+    
+      <category term="live2D" scheme="https://sevencho.github.io/tags/live2D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS开发之Xcode10 Beta3升级Beta4编译错误</title>
+    <link href="https://sevencho.github.io/archives/feadc9a.html"/>
+    <id>https://sevencho.github.io/archives/feadc9a.html</id>
+    <published>2018-07-19T03:10:45.000Z</published>
+    <updated>2018-09-03T03:44:14.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我只愿蓬勃生活在此时此刻，无所谓去哪，无所谓见谁。那些我将要去的地方，都是我从未谋面的故乡。以前是以前，现在是现在。我不能选择怎么生，怎么死；但我能决定怎么爱，怎么活。&lt;/p&gt;
+&lt;p&gt;——王小波《黄金时代》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="Xcode10" scheme="https://sevencho.github.io/tags/Xcode10/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS逆向笔记（二）：iOS二进制文件类型</title>
+    <link href="https://sevencho.github.io/archives/c7624e77.html"/>
+    <id>https://sevencho.github.io/archives/c7624e77.html</id>
+    <published>2018-07-10T11:54:45.000Z</published>
+    <updated>2018-09-03T03:44:41.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;人活在世界上，快乐和痛苦本就分不清。所以我只求它货真价实。&lt;/p&gt;
+&lt;p&gt;——王小波 《革命时期的爱情》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="逆向笔记" scheme="https://sevencho.github.io/categories/iOS/%E9%80%86%E5%90%91%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="逆向笔记" scheme="https://sevencho.github.io/tags/%E9%80%86%E5%90%91%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS逆向笔记（一）：iOS目录结构 &amp; 文件权限</title>
+    <link href="https://sevencho.github.io/archives/971c1db6.html"/>
+    <id>https://sevencho.github.io/archives/971c1db6.html</id>
+    <published>2018-07-10T08:54:45.000Z</published>
+    <updated>2018-09-03T03:44:37.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;绝望是无限的美好。&lt;/p&gt;
+&lt;p&gt;——王小波 《万寿寺》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="逆向笔记" scheme="https://sevencho.github.io/categories/iOS/%E9%80%86%E5%90%91%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="逆向笔记" scheme="https://sevencho.github.io/tags/%E9%80%86%E5%90%91%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS攻防（五）：使用Keychain-Dumper导出keychain数据</title>
+    <link href="https://sevencho.github.io/archives/65ed9c65.html"/>
+    <id>https://sevencho.github.io/archives/65ed9c65.html</id>
+    <published>2018-07-10T07:54:45.000Z</published>
+    <updated>2018-09-03T03:44:30.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;生为冰山，就该淡淡地爱海流、爱风，并且在偶然接触时，全心全意地爱另一块冰山。&lt;/p&gt;
+&lt;p&gt;——王小波 《似水柔情》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/categories/iOS/%E6%94%BB%E9%98%B2/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/tags/%E6%94%BB%E9%98%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS攻防（四）：使用Dumpdecrypted 砸壳 &amp; class-dump 导出头文件</title>
+    <link href="https://sevencho.github.io/archives/8c50aab9.html"/>
+    <id>https://sevencho.github.io/archives/8c50aab9.html</id>
+    <published>2018-07-09T01:25:45.000Z</published>
+    <updated>2018-09-03T03:44:35.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我向来不怕得罪朋友，因为既是朋友，就不怕得罪，不能得罪的就不是朋友，这是我的一贯作风。由这一点你也可猜出，我的朋友为什么这么少。&lt;/p&gt;
+&lt;p&gt;——王小波《似水流年》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/categories/iOS/%E6%94%BB%E9%98%B2/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/tags/%E6%94%BB%E9%98%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS攻防（三）：配置使用Reveal工具逆向别人的App UI界面</title>
+    <link href="https://sevencho.github.io/archives/4de69069.html"/>
+    <id>https://sevencho.github.io/archives/4de69069.html</id>
+    <published>2018-07-06T07:47:45.000Z</published>
+    <updated>2018-09-03T03:44:21.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你生了气就哭,我一看见你哭就目瞪口呆,就像一个小孩子做了坏事在未受责备之前目瞪口呆一样,所以什么事你先别哭,先来责备我,好吗?&lt;/p&gt;
+&lt;p&gt;——王小波《爱你就像爱生命》&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="https://sevencho.github.io/categories/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/categories/iOS/%E6%94%BB%E9%98%B2/"/>
+    
+    
+      <category term="iOS" scheme="https://sevencho.github.io/tags/iOS/"/>
+    
+      <category term="攻防" scheme="https://sevencho.github.io/tags/%E6%94%BB%E9%98%B2/"/>
+    
+  </entry>
+  
+</feed>

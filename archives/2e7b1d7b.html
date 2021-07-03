@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗，一千八百种坏毛病。它真讨厌，只有一点好，爱你。——王小波《爱你就像爱生命》">
+<meta name="keywords" content="iOS,CocoaPods">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建自己的CocoaPods公有库">
+<meta property="og:url" content="https://sevencho.github.io/archives/2e7b1d7b.html">
+<meta property="og:site_name" content="曹雪松de博客|CoderBoy&#39;s Blog">
+<meta property="og:description" content="我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗，一千八百种坏毛病。它真讨厌，只有一点好，爱你。——王小波《爱你就像爱生命》">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://sevencho.github.io/uploads/assets/XSSecurityCodeButton_source.png">
+<meta property="og:updated_time" content="2018-09-03T03:45:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="创建自己的CocoaPods公有库">
+<meta name="twitter:description" content="我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗，一千八百种坏毛病。它真讨厌，只有一点好，爱你。——王小波《爱你就像爱生命》">
+<meta name="twitter:image" content="https://sevencho.github.io/uploads/assets/XSSecurityCodeButton_source.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="曹雪松de博客|CoderBoy's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://sevencho.github.io/archives/2e7b1d7b.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>创建自己的CocoaPods公有库 | 曹雪松de博客|CoderBoy's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">曹雪松de博客|CoderBoy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术宅 iOS开发 美剧控</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives menu-item-active">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />公益</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sevencho.github.io/archives/2e7b1d7b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="曹雪松">
+      <meta itemprop="description" content="一只特立独行的CoderBoy🐶">
+      <meta itemprop="image" content="/uploads/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="曹雪松de博客|CoderBoy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">创建自己的CocoaPods公有库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-27 17:27:45" itemprop="dateCreated datePublished" datetime="2018-06-27T17:27:45+08:00">2018-06-27</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">8.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">15 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<blockquote>
+<p>我把我整个灵魂都给你，连同它的怪癖，耍小脾气，忽明忽暗，一千八百种坏毛病。它真讨厌，只有一点好，爱你。<br>——王小波《爱你就像爱生命》</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="什么是CocoaPods"><a href="#什么是CocoaPods" class="headerlink" title="什么是CocoaPods"></a>什么是CocoaPods</h3><ul>
+<li>CocoaPods 是一个 objc/swift 的第三类库依赖管理工具，而其本身是利用 ruby 的依赖管理 gem 进行构建的.</li>
+<li>通过CocoaPods工具我们可以为项目添加被称为“Pods”的依赖库（这些类库必须是CocoaPods本身所支持的），并且可以轻松管理其版本。</li>
+</ul>
+<h3 id="CocoaPods的好处"><a href="#CocoaPods的好处" class="headerlink" title="CocoaPods的好处"></a>CocoaPods的好处</h3><ul>
+<li>1、在引入第三方库时它可以自动为我们完成各种各样的配置，包括配置编译阶段、连接器选项、甚至是ARC环境下的-fno-objc-arc配置等。</li>
+<li>2、使用CocoaPods可以很方便地查找新的第三方库，这些类库是比较“标准的”，而不是网上随便找到的，这样可以让我们找到真正好用的类库。</li>
+</ul>
+<h3 id="CocoaPods安装"><a href="#CocoaPods安装" class="headerlink" title="CocoaPods安装"></a>CocoaPods安装</h3><ul>
+<li>关于CocoaPods安装请自行百度/谷歌，相关资料已经介绍的非常详尽。</li>
+<li>更详细的文档请参考<a href="https://guides.cocoapods.org/" target="_blank" rel="noopener">官方文档</a></li>
+<li>可以在这里<a href="https://objccn.io/issue-6-4/" target="_blank" rel="noopener">深入理解 CocoaPods</a></li>
+</ul>
+<h4 id="如何制作自己的CocoaPods（公有）库"><a href="#如何制作自己的CocoaPods（公有）库" class="headerlink" title="如何制作自己的CocoaPods（公有）库"></a>如何制作自己的CocoaPods（公有）库</h4><ul>
+<li>想要制作自己的CocoaPods（公有）库，我们需要先大概了解一下CocoaPods的两个文件Podfile / Podspec</li>
+</ul>
+<h4 id="Podfile"><a href="#Podfile" class="headerlink" title="Podfile"></a>Podfile</h4><ul>
+<li>podfile 是一个文件，用于定义项目所需要使用的第三方库。</li>
+<li>该文件支持高度定制，你可以根据个人喜好对其做出定制。更多相关信息，请查阅 <a href="http://guides.cocoapods.org/syntax/podfile.html" target="_blank" rel="noopener">Podfile 指南</a>。</li>
+</ul>
+<h4 id="Podspec"><a href="#Podspec" class="headerlink" title="Podspec"></a>Podspec</h4><ul>
+<li><p><code>.podspec</code> 也是一个文件，该文件描述了一个库是怎样被添加到工程中的。它支持的功能有：列出源文件、framework、编译选项和某个库所需要的依赖等。</p>
+</li>
+<li><p>在我们执行<code>pod install</code> 命令加载第三方库的时候, 会先从远程Podspecs仓库拉取最新的包括版本信息在内的所有的第三方库的列表。</p>
+</li>
+<li><p>存储在本地路径 ~/.cocoapods 中，先显示系统隐藏文件后才可以看到隐藏文件。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaults write com.apple.finder AppleShowAllFiles -boolean true ; killall Finder</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用终端进入查看仓库的远程地址</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.cocoapods/repos/master</span><br><span class="line">git remote -v</span><br><span class="line">// 拉取和更新地址</span><br><span class="line">origin	https://github.com/CocoaPods/Specs.git (fetch)</span><br><span class="line">origin	https://github.com/CocoaPods/Specs.git (push)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>https://github.com/CocoaPods/Specs.git</code> 实际就是CocoaPods的GitHub仓库地址。</li>
+<li>我们如果一直进入<code>~/.cocoapods/repos/master</code><ul>
+<li>就会发现里面的每一个文件夹下都是三方库列表</li>
+<li>每一个三方库文件下存放的是对应的版本号文件夹</li>
+<li>而对应的版本号文件夹里面则只存在唯一的一个以 <code>三方库名称.podspec.json</code>的文件, 我们看一下<code>GoogleMaps</code>大概的内容</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"authors"</span>: <span class="string">"Google, Inc."</span>,</span><br><span class="line">  <span class="attr">"description"</span>: <span class="string">"Use the Google Maps SDK for iOS to enrich your app with interactive maps, immersive Street View panoramas, and detailed information from Google's Places database."</span>,</span><br><span class="line">  <span class="attr">"homepage"</span>: <span class="string">"https://developers.google.com/maps/documentation/ios/"</span>,</span><br><span class="line">  "license": &#123; // 开源协议</span><br><span class="line">    // ...</span><br><span class="line">  &#125;,</span><br><span class="line">  "name": "GoogleMaps", // 三方库名称</span><br><span class="line">  "platforms": &#123; // 三方库平台及版本</span><br><span class="line">    "ios": "8.0"</span><br><span class="line">  &#125;,</span><br><span class="line">  "preserve_paths": [</span><br><span class="line">    // ...</span><br><span class="line">  ],</span><br><span class="line">  "source": &#123;</span><br><span class="line">    "http": "https://dl.google.com/dl/cpdc/f4086b0aa122de6c/GoogleMaps-2.7.0.tar.gz" // 三方库源码</span><br><span class="line">  &#125;,</span><br><span class="line">  "summary": "Google Maps SDK for iOS.", // 三方库描述</span><br><span class="line">  "version": "2.7.0", // 三方库版本</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们尝试在终端搜索一下第三方库<code>GoogleMaps</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// pod search GoogleMaps</span><br><span class="line"></span><br><span class="line">-&gt; GoogleMaps (2.7.0) // 三方库名称</span><br><span class="line">   Google Maps SDK for iOS.  // 三方库描述</span><br><span class="line">   pod &apos;GoogleMaps&apos;, &apos;~&gt; 2.7.0&apos; // 三方库版本</span><br><span class="line">   - Homepage: https://developers.google.com/maps/documentation/ios/</span><br><span class="line">   - Source:   https://dl.google.com/dl/cpdc/f4086b0aa122de6c/GoogleMaps-2.7.0.tar.gz  // 三方库源码</span><br><span class="line">   - Versions: 2.7.0, 2.6.0, 2.5.0, 2.4.0, 2.3.1, 2.3.0, 2.2.0, 2.1.1, 2.1.0, 2.0.1, 2.0.0, 1.13.2, 1.13.1, 1.13.0, 1.12.3, 1.12.2, 1.12.1, 1.12.0, 1.11.1, 1.11.0, 1.10.5, 1.10.4, 1.10.3, 1.10.2, 1.10.1,</span><br><span class="line">   1.10.0, 1.9.2 [master repo]</span><br><span class="line">   - Subspecs:</span><br><span class="line">// ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们平时在<code>pod search</code>第三方库后出现的结果其实都是<code>三方库名称.podspec.json</code>这个文件的内容，所以我们只做自己的CocoaPods库，也要从整个文件入手。</li>
+</ul>
+<h2 id="正式开始"><a href="#正式开始" class="headerlink" title="正式开始"></a>正式开始</h2><h3 id="注册-CocoaPods-账号"><a href="#注册-CocoaPods-账号" class="headerlink" title="注册 CocoaPods 账号"></a>注册 CocoaPods 账号</h3><ul>
+<li>因为我们的是用CocoaPods统一管理我们的自己的开源库，所以需要一个CocoaPods账号用来发布库。</li>
+<li>我们使用终端来进行注册，在终端输入下面的指令、回车：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// gitHub_email ： 注册CocoaPods的邮箱， 我使用的是和注册GitHub一样的邮箱。</span><br><span class="line">// your_user_name ：你注册CocoaPods的用户名</span><br><span class="line"> pod trunk register gitHub_email &apos;your_user_name&apos; --verbose</span><br></pre></td></tr></table></figure>
+<ul>
+<li>成功后终端输入下面信息，CocoaPods 会发一个确认邮件到你的邮箱上，登录你的邮箱进行确认。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[!] Please verify the session by clicking the link in the verification email that has been sent to gitHub_email</span><br></pre></td></tr></table></figure>
+<ul>
+<li>确认完成后，输入如下指令查看注册信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// pod trunk me</span><br><span class="line"></span><br><span class="line">- Name:     your_register_name // 你的注册昵称</span><br><span class="line">  - Email:    your_register_email // 你的注册邮箱</span><br><span class="line">  - Since:    June 26th, 03:26</span><br><span class="line">  - Pods:     None</span><br><span class="line">  - Sessions:</span><br><span class="line">    - June 26th, 03:26 - November 1st, 03:28. IP: 119.136.114.95</span><br></pre></td></tr></table></figure>
+<h3 id="创建Git仓库"><a href="#创建Git仓库" class="headerlink" title="创建Git仓库"></a>创建Git仓库</h3><ul>
+<li><p>在 GitHub 上创建一个公开项目，项目中必须包含这几个文件</p>
+<ul>
+<li>LICENSE: 开源许可证</li>
+<li>README.md: 库的使用介绍文件</li>
+<li>你的开源库代码</li>
+<li><code>你的三方库名称</code>.podspec : CocoaPods 的描述文件，这个文件非常重要</li>
+</ul>
+</li>
+<li><p>这里我们以我仿写的一个demo为例子,如下图：</p>
+</li>
+<li><img src="/uploads/assets/XSSecurityCodeButton_source.png" alt="开源库文件组成"></li>
+<li><code>XSSecurityCodeButton-Demo</code>是一个演示项目</li>
+<li><code>XSSecurityCodeButton</code>是一个演示项目</li>
+<li><code>LICENSE</code>开源许可证，如何创建请自行百度/谷歌，非常简单。</li>
+<li><code>README.md</code>库的使用介绍文件，如何创建请自行百度/谷歌，非常简单。</li>
+<li><code>XSSecurityCodeButton.podspec</code>CocoaPods的描述文件</li>
+</ul>
+<h3 id="创建-podspec"><a href="#创建-podspec" class="headerlink" title="创建.podspec"></a>创建<code>.podspec</code></h3><ul>
+<li>进入你需要制作开源库的项目根目录</li>
+<li>终端执行下面的指令，会在你的仓库下生成 <code>XSSecurityCodeButton.podspec</code>文件</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// XSSecurityCodeButton 我的项目名称，请自行修改</span><br><span class="line">pod spec create XSSecurityCodeButton</span><br><span class="line"></span><br><span class="line">// 执行完成生成会输入如下信息</span><br><span class="line">Specification created at XSSecurityCodeButton.podspec</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>XSSecurityCodeButton.podspec</code>文件配置及修改请参考下面（已删除部分无用的干扰内容），重要的地方我已经给出注释。</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">Pod::Spec.new <span class="keyword">do</span> <span class="params">|s|</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  s.name         = <span class="string">"XSSecurityCodeButton"</span></span><br><span class="line">  s.version      = <span class="string">"0.0.1"</span>        <span class="comment"># 版本号 与 你仓库的 标签号 对应</span></span><br><span class="line">  s.summary      = <span class="string">"XSSecurityCodeButton 是一个简约的验证码按钮."</span></span><br><span class="line">  s.description  = <span class="string">&lt;&lt;-DESC</span></span><br><span class="line"><span class="string">                    # 这里的描述，必须比s.summary的长度要长。</span></span><br><span class="line"><span class="string">                   DESC</span></span><br><span class="line">  s.homepage     = <span class="string">"https://github.com/SevenCho/XSSecurityCodeButton"</span> <span class="comment"># 你的源码页</span></span><br><span class="line">  <span class="comment"># s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  s.license      = <span class="string">"MIT"</span>          <span class="comment"># 开源证书</span></span><br><span class="line">  <span class="comment"># s.license      = &#123; :type =&gt; "MIT", :file =&gt; "FILE_LICENSE" &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  s.author             = &#123; <span class="string">"库发布者"</span> =&gt; <span class="string">"邮箱"</span> &#125;</span><br><span class="line">  <span class="comment"># Or just: s.author    = "库发布者"</span></span><br><span class="line">  <span class="comment"># s.authors            = &#123; "库发布者" =&gt; "邮箱" &#125;</span></span><br><span class="line">  s.social_media_url   = <span class="string">"https://sevencho.github.io"</span> /<span class="regexp">/ 你的个人网页，如果有的话</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line"><span class="regexp">  # s.platform     = :ios</span></span><br><span class="line"><span class="regexp">  s.platform     = :ios, "8.0" # 平台及支持的最低版本</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line"><span class="regexp">  s.source       = &#123; :git =&gt; "https:/</span><span class="regexp">/github.com/</span>SevenCho/XSSecurityCodeButton.git<span class="string">", :tag =&gt; "</span><span class="comment">#&#123;s.version&#125;" &#125; # 你的仓库地址，不能用SSH地址</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  s.source_files  = <span class="string">"XSSecurityCodeButton"</span>, <span class="string">"XSSecurityCodeButton/**/*.&#123;h,m&#125;"</span> <span class="comment"># 你代码的位置， XSSecurityCodeButton/*.&#123;h,m&#125; 表示 XSSecurityCodeButton 文件夹下所有的.h和.m文件</span></span><br><span class="line">  <span class="comment"># s.exclude_files = "Classes/Exclude" # 可执行文件</span></span><br><span class="line">  <span class="comment"># s.public_header_files = "Classes/**/*.h" # 公共头文件</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  <span class="comment"># s.resource  = "icon.png" # 注意：如果你的代码里包含xib文件，xib属于资源文件，需要resource引入。</span></span><br><span class="line">  <span class="comment"># s.resources = "Resources/*.png"</span></span><br><span class="line">  <span class="comment"># s.preserve_paths = "FilesToSave", "MoreFilesToSave"</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  <span class="comment"># s.framework  = "SomeFramework"</span></span><br><span class="line">  s.frameworks = <span class="string">"UIKit"</span>, <span class="string">"Foundation"</span> <span class="comment"># 支持的框架</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># s.library   = "iconv"</span></span><br><span class="line">  <span class="comment"># s.libraries = "iconv", "xml2"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment"># ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #</span></span><br><span class="line">  s.requires_arc = <span class="literal">true</span> <span class="comment"># 需要ARC支持</span></span><br><span class="line">  <span class="comment"># s.xcconfig = &#123; "HEADER_SEARCH_PATHS" =&gt; "$(SDKROOT)/usr/include/libxml2" &#125;</span></span><br><span class="line">  <span class="comment"># s.dependency "JSONKit", "~&gt; 1.4"</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h3 id="验证-podspec-文件的格式是否正确"><a href="#验证-podspec-文件的格式是否正确" class="headerlink" title="验证 .podspec 文件的格式是否正确"></a>验证 <code>.podspec</code> 文件的格式是否正确</h3><ul>
+<li>创建完成<code>.podspec</code>文件并按照上面配置完成，接下来我们就需要文件内容及格式是否正确。</li>
+<li>终端执行如下指令：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint</span><br></pre></td></tr></table></figure>
+<ul>
+<li>验证通过就会输入如下信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XSSecurityCodeButton passed validation.</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果你的项目源码被验证出有警告信息，会输出含有如下内容的信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(but you can use `--allow-warnings` to ignore them).</span><br></pre></td></tr></table></figure>
+<ul>
+<li>此时你只需要在验证指令后面加上对应的提示，重新验证一遍</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod lib lint --allow-warnings</span><br></pre></td></tr></table></figure>
+<h3 id="给仓库打标签"><a href="#给仓库打标签" class="headerlink" title="给仓库打标签"></a>给仓库打标签</h3><ul>
+<li>验证成功后，就需要将仓库提交到远程，然后给仓库打上标签并将标签也推送到远程。</li>
+<li>标签相当于是你的仓库的一个压缩包，用于稳定存储当前版本。</li>
+<li>标签号与你在 s.version = “0.0.1”的版本号一致0.0.1</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 创建标签</span><br><span class="line">git tag -a 0.0.1 -m &apos;标签说明&apos; </span><br><span class="line">// 推送到远程</span><br><span class="line">git push origin --tags</span><br></pre></td></tr></table></figure>
+<h3 id="发布-podspec"><a href="#发布-podspec" class="headerlink" title="发布.podspec"></a>发布<code>.podspec</code></h3><ul>
+<li>发布项目的描述的文件, 在项目根目录下执行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pod trunk push XSSecurityCodeButton.podspec</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这一步会执行如下操作：<ul>
+<li>更新本地 pods 库 <code>~/.cocoaPods.repo/master</code></li>
+<li>验证<code>.podspec</code>格式是否正确<br>-<code>.podspec</code> 文件转成 JSON 格式</li>
+<li>对master仓库 进行合并，提交.master仓库地址</li>
+</ul>
+</li>
+<li>发布成功后输入如下内容：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Updating spec repo `master`</span><br><span class="line">--------------------------------------------------------------------------------</span><br><span class="line"> 🎉  Congrats</span><br><span class="line"></span><br><span class="line"> 🚀  XSSecurityCodeButton (0.0.1) successfully published</span><br><span class="line"> 📅  June 26th, 04:13</span><br><span class="line"> 🌎  https://cocoapods.org/pods/XSSecurityCodeButton // 你发布的cocoapods仓库信息，可在浏览器打开查看</span><br><span class="line"> 👍  Tell your friends!</span><br></pre></td></tr></table></figure>
+<h3 id="使用仓库"><a href="#使用仓库" class="headerlink" title="使用仓库"></a>使用仓库</h3><ul>
+<li>先更新本地pods仓库信息</li>
+<li>更新完成本地仓库后就可以搜索使用我们自己发布的cocoapods仓库了</li>
+<li>就可以在需要的项目的Podfile添加、使用自己的仓库了 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pod setup   // 更新</span><br><span class="line">pod search XSSecurityCodeButton // 搜索</span><br><span class="line">pod &apos;XSSecurityCodeButton&apos;, &apos;~&gt; 0.0.1&apos; // 需要使用的项目的Podfile文件中添加后安装，和使用其他三方库一样</span><br></pre></td></tr></table></figure>
+<h3 id="更新维护"><a href="#更新维护" class="headerlink" title="更新维护"></a>更新维护</h3><ul>
+<li>当我们维护修改了我们的源码文件后就需要重新发布一个新的版本到cocoapods<ul>
+<li>项目源码打上对应的标签推送到自己的远程仓库</li>
+<li>更新<code>XSSecurityCodeButton.podspec</code>中版本号（和新的标签一致）</li>
+<li>重新执行<code>pod trunk push XSSecurityCodeButton.podspec --allow-warnings</code>推送发布到pods仓库</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>要不要鼓励一下😘</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/images/wechat-reward-image.JPG" alt="曹雪松 微信"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/images/alipay-reward-image.JPG" alt="曹雪松 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>曹雪松</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sevencho.github.io/archives/2e7b1d7b.html" title="创建自己的CocoaPods公有库">https://sevencho.github.io/archives/2e7b1d7b.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 CC BY-NC-SA 3.0 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/CocoaPods/" rel="tag"><i class="fa fa-tag"></i> CocoaPods</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/33f710d8.html" rel="next" title="<译>一个成功的分支模型">
+                <i class="fa fa-chevron-left"></i> <译>一个成功的分支模型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/e38331a.html" rel="prev" title="iOS攻防（一）： iPhone手机越狱 & SSH">
+                iOS攻防（一）： iPhone手机越狱 & SSH <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/images/avatar.JPG"
+                alt="曹雪松" />
+            
+              <p class="site-author-name" itemprop="name">曹雪松</p>
+              <p class="site-description motion-element" itemprop="description">一只特立独行的CoderBoy🐶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">67</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/SevenCho" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:243166621@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是CocoaPods"><span class="nav-number">1.1.</span> <span class="nav-text">什么是CocoaPods</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CocoaPods的好处"><span class="nav-number">1.2.</span> <span class="nav-text">CocoaPods的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CocoaPods安装"><span class="nav-number">1.3.</span> <span class="nav-text">CocoaPods安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何制作自己的CocoaPods（公有）库"><span class="nav-number">1.3.1.</span> <span class="nav-text">如何制作自己的CocoaPods（公有）库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Podfile"><span class="nav-number">1.3.2.</span> <span class="nav-text">Podfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Podspec"><span class="nav-number">1.3.3.</span> <span class="nav-text">Podspec</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正式开始"><span class="nav-number">2.</span> <span class="nav-text">正式开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注册-CocoaPods-账号"><span class="nav-number">2.1.</span> <span class="nav-text">注册 CocoaPods 账号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Git仓库"><span class="nav-number">2.2.</span> <span class="nav-text">创建Git仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建-podspec"><span class="nav-number">2.3.</span> <span class="nav-text">创建.podspec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证-podspec-文件的格式是否正确"><span class="nav-number">2.4.</span> <span class="nav-text">验证 .podspec 文件的格式是否正确</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给仓库打标签"><span class="nav-number">2.5.</span> <span class="nav-text">给仓库打标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布-podspec"><span class="nav-number">2.6.</span> <span class="nav-text">发布.podspec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用仓库"><span class="nav-number">2.7.</span> <span class="nav-text">使用仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新维护"><span class="nav-number">2.8.</span> <span class="nav-text">更新维护</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">曹雪松</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">351k</span>
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"width":120,"height":200,"position":"left","hOffset":20,"vOffset":50},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/"});</script></body>
+</html>

